@@ -323,10 +323,12 @@ return {
     end,
     opts = function()
       return {
-        click = true,
-        separator = " ",
-        highlight = true,
+        icons = {
+          Object = " ",
+        },
+        separator = "  ",
         depth_limit = 5,
+        -- Removed for better icons
         -- icons = require("config").icons.kinds,
       }
     end,

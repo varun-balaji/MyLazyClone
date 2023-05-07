@@ -1,15 +1,14 @@
 return {
-  -- tokyonight
+  -- Kanagawa <3
   {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    opts = { style = "moon" },
-  },
-
-  -- catppuccin
-  {
-    "catppuccin/nvim",
-    lazy = true,
-    name = "catppuccin",
+    "rebelot/kanagawa.nvim",
+    -- Added to copy LazyVim
+    -- lazy = true,
+    -- name = "kanagawa",
+    -- Commented
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("kanagawa")
+    end,
   },
 }
