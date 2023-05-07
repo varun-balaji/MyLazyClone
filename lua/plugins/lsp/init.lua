@@ -14,6 +14,8 @@ return {
           return require("util").has("nvim-cmp")
         end,
       },
+      -- Useful status updates for LSP
+      { "j-hui/fidget.nvim", opts = {} },
     },
     ---@class PluginLspOpts
     opts = {

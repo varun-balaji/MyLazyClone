@@ -295,6 +295,7 @@ return {
       signs = {
         add = { text = "▎" },
         change = { text = "▎" },
+        -- TODO think about what signs to change these to
         delete = { text = "" },
         topdelete = { text = "" },
         changedelete = { text = "▎" },
@@ -322,6 +323,12 @@ return {
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
       end,
     },
+  },
+
+  -- Git goodness
+  {
+    "tpope/vim-fugitive",
+    event = { "BufReadPre", "BufNewFile" },
   },
 
   -- TODO check if we need this
@@ -409,6 +416,8 @@ return {
     cmd = { "TodoTrouble", "TodoTelescope" },
     event = { "BufReadPost", "BufNewFile" },
     opts = {
+      -- I don't want signs in the column
+      signs = false,
       highlight = {
         multiline = false,
         before = "fg",
