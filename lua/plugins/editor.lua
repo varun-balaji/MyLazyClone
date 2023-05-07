@@ -2,6 +2,7 @@ local Util = require("util")
 
 return {
 
+  -- TODO check if we need this
   -- file explorer
   -- {
   --   "nvim-neo-tree/neo-tree.nvim",
@@ -78,11 +79,24 @@ return {
   --   },
   -- },
 
+  -- TODO add telescope fzf and file browser
   -- fuzzy finder
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     version = false, -- telescope did only one release, so use HEAD for now
+    dependencies = {
+      -- FZF for telescope
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        -- NOTE: If you are having trouble with this installation,
+        --       refer to the README for telescope-fzf-native for more instructions.
+        build = "make",
+        cond = function()
+          return vim.fn.executable("make") == 1
+        end,
+      },
+    },
     keys = {
       { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>/", Util.telescope("live_grep"), desc = "Grep (root dir)" },
@@ -194,6 +208,21 @@ return {
     },
   },
 
+  -- Telescope file browser
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {},
+    event = "VeryLazy",
+    config = function(_, opts)
+      require("telescope").setup(opts)
+      require("telescope").load_extension("file_browser")
+    end,
+    keys = {
+      { "<leader>se", "<Cmd>Telescope file_browser<CR>", desc = "File browser" },
+    },
+  },
+
   -- easily jump to any location and enhanced f/t motions for Leap
   -- {
   --   "ggandor/flit.nvim",
@@ -294,37 +323,38 @@ return {
     },
   },
 
+  -- TODO check if we need this
   -- references
-  {
-    "RRethy/vim-illuminate",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = { delay = 200 },
-    config = function(_, opts)
-      require("illuminate").configure(opts)
-
-      local function map(key, dir, buffer)
-        vim.keymap.set("n", key, function()
-          require("illuminate")["goto_" .. dir .. "_reference"](false)
-        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
-      end
-
-      map("]]", "next")
-      map("[[", "prev")
-
-      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
-      vim.api.nvim_create_autocmd("FileType", {
-        callback = function()
-          local buffer = vim.api.nvim_get_current_buf()
-          map("]]", "next", buffer)
-          map("[[", "prev", buffer)
-        end,
-      })
-    end,
-    keys = {
-      { "]]", desc = "Next Reference" },
-      { "[[", desc = "Prev Reference" },
-    },
-  },
+  -- {
+  --   "RRethy/vim-illuminate",
+  --   event = { "BufReadPost", "BufNewFile" },
+  --   opts = { delay = 200 },
+  --   config = function(_, opts)
+  --     require("illuminate").configure(opts)
+  --
+  --     local function map(key, dir, buffer)
+  --       vim.keymap.set("n", key, function()
+  --         require("illuminate")["goto_" .. dir .. "_reference"](false)
+  --       end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+  --     end
+  --
+  --     map("]]", "next")
+  --     map("[[", "prev")
+  --
+  --     -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+  --     vim.api.nvim_create_autocmd("FileType", {
+  --       callback = function()
+  --         local buffer = vim.api.nvim_get_current_buf()
+  --         map("]]", "next", buffer)
+  --         map("[[", "prev", buffer)
+  --       end,
+  --     })
+  --   end,
+  --   keys = {
+  --     { "]]", desc = "Next Reference" },
+  --     { "[[", desc = "Prev Reference" },
+  --   },
+  -- },
 
   -- buffer remove
   {
@@ -336,46 +366,58 @@ return {
     },
   },
 
+  -- TODO check if we need this
   -- better diagnostics list and others
-  {
-    "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
-    opts = { use_diagnostic_signs = true },
-    keys = {
-      { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-      { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
-      { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-      { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
-      {
-        "[q",
-        function()
-          if require("trouble").is_open() then
-            require("trouble").previous({ skip_groups = true, jump = true })
-          else
-            vim.cmd.cprev()
-          end
-        end,
-        desc = "Previous trouble/quickfix item",
-      },
-      {
-        "]q",
-        function()
-          if require("trouble").is_open() then
-            require("trouble").next({ skip_groups = true, jump = true })
-          else
-            vim.cmd.cnext()
-          end
-        end,
-        desc = "Next trouble/quickfix item",
-      },
-    },
-  },
+  -- {
+  --   "folke/trouble.nvim",
+  --   cmd = { "TroubleToggle", "Trouble" },
+  --   opts = { use_diagnostic_signs = true },
+  --   keys = {
+  --     { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
+  --     { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+  --     { "<leader>xL", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
+  --     { "<leader>xQ", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+  --     {
+  --       "[q",
+  --       function()
+  --         if require("trouble").is_open() then
+  --           require("trouble").previous({ skip_groups = true, jump = true })
+  --         else
+  --           vim.cmd.cprev()
+  --         end
+  --       end,
+  --       desc = "Previous trouble/quickfix item",
+  --     },
+  --     {
+  --       "]q",
+  --       function()
+  --         if require("trouble").is_open() then
+  --           require("trouble").next({ skip_groups = true, jump = true })
+  --         else
+  --           vim.cmd.cnext()
+  --         end
+  --       end,
+  --       desc = "Next trouble/quickfix item",
+  --     },
+  --   },
+  -- },
 
   -- todo comments
   {
     "folke/todo-comments.nvim",
     cmd = { "TodoTrouble", "TodoTelescope" },
     event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      highlight = {
+        multiline = false,
+        before = "fg",
+        keyword = "bg",
+        pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns, used for highlighting (vim regex)
+      },
+      search = {
+        pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. Keep an eye out for false positives
+      },
+    },
     config = true,
     -- stylua: ignore
     keys = {

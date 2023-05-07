@@ -22,14 +22,14 @@ return {
     },
     init = function()
       -- when noice is not enabled, install notify on VeryLazy
-      -- Noice is not enabled so 
+      -- Noice is not enabled so
       -- local Util = require("util")
       -- if not Util.has("noice.nvim") then
       --   Util.on_very_lazy(function()
       --     vim.notify = require("notify")
       --   end)
       -- end
-      require("util").on_very_lazy(function ()
+      require("util").on_very_lazy(function()
         vim.notify = require("notify")
       end)
     end,
@@ -99,15 +99,17 @@ return {
         options = {
           icons_enable = true,
           theme = "auto",
-          component_separators = '|',
-          section_separators = '',
+          component_separators = "|",
+          section_separators = "",
           disabled_filetypes = { statusline = { "dashboard", "alpha" } },
-          globalstatus = true,
+          -- TODO see if this is needed
+          -- globalstatus = true,
+          globalstatus = false,
         },
         sections = {
           lualine_a = { "mode" },
           lualine_b = {
-            {"branch"},
+            { "branch" },
             {
               "diff",
               symbols = {
