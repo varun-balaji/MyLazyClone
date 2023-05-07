@@ -36,9 +36,9 @@ local defaults = {
       -- added = " ",
       -- modified = " ",
       -- removed = " ",
-      added = "+ ",
-      modified = "~ ",
-      removed = "- ",
+      added = "+",
+      modified = "~",
+      removed = "-",
     },
     kinds = {
       Array = " ",
