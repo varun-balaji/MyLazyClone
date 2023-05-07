@@ -81,11 +81,12 @@ return {
             return item
           end,
         },
-        experimental = {
-          ghost_text = {
-            hl_group = "LspCodeLens",
-          },
-        },
+        -- Was annoying
+        -- experimental = {
+        --   ghost_text = {
+        --     hl_group = "LspCodeLens",
+        --   },
+        -- },
       }
     end,
   },
