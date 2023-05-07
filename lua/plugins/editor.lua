@@ -213,7 +213,7 @@ return {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {},
-    -- TODO Don't think it should be verylazy
+    -- Don't think it should be verylazy
     -- event = "VeryLazy",
     config = function(_, opts)
       require("telescope").setup(opts)
