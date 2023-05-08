@@ -331,6 +331,12 @@ return {
     event = { "BufReadPre", "BufNewFile" },
   },
 
+  -- Detect tabstop and shiftwidth automatically
+  {
+    "tpope/vim-sleuth",
+    event = { "BufReadPre", "BufNewFile" },
+  },
+
   -- TODO check if we need this
   -- references
   -- {

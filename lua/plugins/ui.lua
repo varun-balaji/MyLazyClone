@@ -131,12 +131,12 @@ return {
               },
             },
             { "filename", path = 4, symbols = { readonly = "", unnamed = "" } },
+            -- TODO see if you need this
             -- stylua: ignore
-            {
-              -- Guessing that this provides breadcrumbs for LSP
-              function() return require("nvim-navic").get_location() end,
-              cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
-            },
+            -- {
+            --   function() return require("nvim-navic").get_location() end,
+            --   cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
+            -- },
           },
           lualine_x = {
             -- stylua: ignore
