@@ -53,6 +53,7 @@ return {
         "typescript",
         "vim",
         "vimdoc",
+        "xhtml",
         "yaml",
       },
       incremental_selection = {
