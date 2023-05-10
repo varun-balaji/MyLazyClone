@@ -37,22 +37,23 @@ return {
   },
 
   -- better vim.ui
-  {
-    "stevearc/dressing.nvim",
-    lazy = true,
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.select(...)
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.input(...)
-      end
-    end,
-  },
+  -- TODO figure out if we need this
+  -- {
+  --   "stevearc/dressing.nvim",
+  --   lazy = true,
+  --   init = function()
+  --     ---@diagnostic disable-next-line: duplicate-set-field
+  --     vim.ui.select = function(...)
+  --       require("lazy").load({ plugins = { "dressing.nvim" } })
+  --       return vim.ui.select(...)
+  --     end
+  --     ---@diagnostic disable-next-line: duplicate-set-field
+  --     vim.ui.input = function(...)
+  --       require("lazy").load({ plugins = { "dressing.nvim" } })
+  --       return vim.ui.input(...)
+  --     end
+  --   end,
+  -- },
 
   -- bufferline
   -- {
@@ -140,17 +141,18 @@ return {
           },
           lualine_x = {
             -- stylua: ignore
-            {
-              function() return require("noice").api.status.command.get() end,
-              cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-              color = Util.fg("Statement"),
-            },
-            -- stylua: ignore
-            {
-              function() return require("noice").api.status.mode.get() end,
-              cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-              color = Util.fg("Constant"),
-            },
+            -- TODO add these if we use noice
+            -- {
+            --   function() return require("noice").api.status.command.get() end,
+            --   cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+            --   color = Util.fg("Statement"),
+            -- },
+            -- -- stylua: ignore
+            -- {
+            --   function() return require("noice").api.status.mode.get() end,
+            --   cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+            --   color = Util.fg("Constant"),
+            -- },
             -- stylua: ignore
             {
               function() return "  " .. require("dap").status() end,
@@ -249,96 +251,99 @@ return {
   -- },
 
   -- dashboard
-  {
-    "goolord/alpha-nvim",
-    event = "VimEnter",
-    opts = function()
-      local dashboard = require("alpha.themes.dashboard")
-      local logo = [[
-      ██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗          Z
-      ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝██║   ██║██║████╗ ████║      Z    
-      ██║     ███████║  ███╔╝  ╚████╔╝ ██║   ██║██║██╔████╔██║   z       
-      ██║     ██╔══██║ ███╔╝    ╚██╔╝  ╚██╗ ██╔╝██║██║╚██╔╝██║ z         
-      ███████╗██║  ██║███████╗   ██║    ╚████╔╝ ██║██║ ╚═╝ ██║
-      ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝
-      ]]
-
-      dashboard.section.header.val = vim.split(logo, "\n")
-      dashboard.section.buttons.val = {
-        dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
-        dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
-        dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
-        dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
-        dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
-        dashboard.button("s", " " .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
-        dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
-        dashboard.button("q", " " .. " Quit", ":qa<CR>"),
-      }
-      for _, button in ipairs(dashboard.section.buttons.val) do
-        button.opts.hl = "AlphaButtons"
-        button.opts.hl_shortcut = "AlphaShortcut"
-      end
-      dashboard.section.header.opts.hl = "AlphaHeader"
-      dashboard.section.buttons.opts.hl = "AlphaButtons"
-      dashboard.section.footer.opts.hl = "AlphaFooter"
-      dashboard.opts.layout[1].val = 8
-      return dashboard
-    end,
-    config = function(_, dashboard)
-      -- close Lazy and re-open when the dashboard is ready
-      if vim.o.filetype == "lazy" then
-        vim.cmd.close()
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "AlphaReady",
-          callback = function()
-            require("lazy").show()
-          end,
-        })
-      end
-
-      require("alpha").setup(dashboard.opts)
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "LazyVimStarted",
-        callback = function()
-          local stats = require("lazy").stats()
-          local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-          dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
-          pcall(vim.cmd.AlphaRedraw)
-        end,
-      })
-    end,
-  },
+  -- TODO see if we need this
+  -- {
+  --   "goolord/alpha-nvim",
+  --   event = "VimEnter",
+  --   opts = function()
+  --     local dashboard = require("alpha.themes.dashboard")
+  --     local logo = [[
+  --     ██╗      █████╗ ███████╗██╗   ██╗██╗   ██╗██╗███╗   ███╗          Z
+  --     ██║     ██╔══██╗╚══███╔╝╚██╗ ██╔╝██║   ██║██║████╗ ████║      Z
+  --     ██║     ███████║  ███╔╝  ╚████╔╝ ██║   ██║██║██╔████╔██║   z
+  --     ██║     ██╔══██║ ███╔╝    ╚██╔╝  ╚██╗ ██╔╝██║██║╚██╔╝██║ z
+  --     ███████╗██║  ██║███████╗   ██║    ╚████╔╝ ██║██║ ╚═╝ ██║
+  --     ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝     ╚═══╝  ╚═╝╚═╝     ╚═╝
+  --     ]]
+  --
+  --     dashboard.section.header.val = vim.split(logo, "\n")
+  --     dashboard.section.buttons.val = {
+  --       dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
+  --       dashboard.button("n", " " .. " New file", ":ene <BAR> startinsert <CR>"),
+  --       dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
+  --       dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
+  --       dashboard.button("c", " " .. " Config", ":e $MYVIMRC <CR>"),
+  --       dashboard.button("s", " " .. " Restore Session", [[:lua require("persistence").load() <cr>]]),
+  --       dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
+  --       dashboard.button("q", " " .. " Quit", ":qa<CR>"),
+  --     }
+  --     for _, button in ipairs(dashboard.section.buttons.val) do
+  --       button.opts.hl = "AlphaButtons"
+  --       button.opts.hl_shortcut = "AlphaShortcut"
+  --     end
+  --     dashboard.section.header.opts.hl = "AlphaHeader"
+  --     dashboard.section.buttons.opts.hl = "AlphaButtons"
+  --     dashboard.section.footer.opts.hl = "AlphaFooter"
+  --     dashboard.opts.layout[1].val = 8
+  --     return dashboard
+  --   end,
+  --   config = function(_, dashboard)
+  --     -- close Lazy and re-open when the dashboard is ready
+  --     if vim.o.filetype == "lazy" then
+  --       vim.cmd.close()
+  --       vim.api.nvim_create_autocmd("User", {
+  --         pattern = "AlphaReady",
+  --         callback = function()
+  --           require("lazy").show()
+  --         end,
+  --       })
+  --     end
+  --
+  --     require("alpha").setup(dashboard.opts)
+  --
+  --     vim.api.nvim_create_autocmd("User", {
+  --       pattern = "LazyVimStarted",
+  --       callback = function()
+  --         local stats = require("lazy").stats()
+  --         local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
+  --         dashboard.section.footer.val = "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms"
+  --         pcall(vim.cmd.AlphaRedraw)
+  --       end,
+  --     })
+  --   end,
+  -- },
 
   -- lsp symbol navigation for lualine
   -- TODO fix this
-  {
-    "SmiteshP/nvim-navic",
-    lazy = true,
-    init = function()
-      vim.g.navic_silence = true
-      require("util").on_attach(function(client, buffer)
-        if client.server_capabilities.documentSymbolProvider then
-          require("nvim-navic").attach(client, buffer)
-        end
-      end)
-    end,
-    opts = function()
-      return {
-        icons = {
-          Object = " ",
-        },
-        separator = "  ",
-        depth_limit = 5,
-        -- Removed for better icons
-        -- icons = require("config").icons.kinds,
-      }
-    end,
-  },
+  -- {
+  --   "SmiteshP/nvim-navic",
+  --   lazy = true,
+  --   init = function()
+  --     vim.g.navic_silence = true
+  --     require("util").on_attach(function(client, buffer)
+  --       if client.server_capabilities.documentSymbolProvider then
+  --         require("nvim-navic").attach(client, buffer)
+  --       end
+  --     end)
+  --   end,
+  --   opts = function()
+  --     return {
+  --       icons = {
+  --         Object = " ",
+  --       },
+  --       separator = "  ",
+  --       depth_limit = 5,
+  --       -- Removed for better icons
+  --       -- icons = require("config").icons.kinds,
+  --     }
+  --   end,
+  -- },
 
   -- icons
-  { "nvim-tree/nvim-web-devicons", lazy = true },
+  -- TODO We shouldn't need this. Only load it as a dependency.
+  -- { "nvim-tree/nvim-web-devicons", lazy = true },
 
   -- ui components
-  { "MunifTanjim/nui.nvim", lazy = true },
+  -- TODO see if we need this
+  -- { "MunifTanjim/nui.nvim", lazy = true },
 }
