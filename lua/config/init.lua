@@ -80,10 +80,6 @@ local defaults = {
   },
 }
 
-M.renames = {
-  ["windwp/nvim-spectre"] = "nvim-pack/nvim-spectre",
-}
-
 ---@type LazyVimConfig
 local options
 
