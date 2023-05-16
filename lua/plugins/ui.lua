@@ -109,6 +109,7 @@ return {
           globalstatus = false,
         },
         sections = {
+          -- TODO maybe add the open buffers here?
           lualine_a = { "mode" },
           lualine_b = {
             { "branch" },
