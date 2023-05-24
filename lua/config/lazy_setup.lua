@@ -12,7 +12,10 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  checker = { enabled = true }, -- automatically check for plugin updates
+  checker = {
+    enabled = true,
+    notify = false, -- Don't pop up annoying notification at startup.
+  }, -- automatically check for plugin updates
   install = {
     -- try to load one of these colorschemes when starting an installation during startup
     colorscheme = { "kanagawa" },

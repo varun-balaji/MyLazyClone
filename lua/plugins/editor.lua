@@ -79,7 +79,6 @@ return {
   --   },
   -- },
 
-  -- TODO add telescope fzf and file browser
   -- fuzzy finder
   {
     "nvim-telescope/telescope.nvim",
@@ -97,40 +96,19 @@ return {
       },
     },
     keys = {
-      { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
-      { "<leader>/", Util.telescope("live_grep"), desc = "Grep (root dir)" },
-      { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      { "<leader><space>", Util.telescope("files"), desc = "Find Files (root dir)" },
-      -- find
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>ff", Util.telescope("files"), desc = "Find Files (root dir)" },
-      { "<leader>fF", Util.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
-      { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
-      { "<leader>fR", Util.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
-      -- git
-      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
-      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
-      -- search
-      { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
-      { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
-      { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
-      { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
-      { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
-      { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
-      { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
-      { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
-      { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
-      { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
-      { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
-      { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
-      { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-      { "<leader>sw", Util.telescope("grep_string"), desc = "Word (root dir)" },
-      { "<leader>sW", Util.telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
-      { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+      -- [f]ind words
+      { "<leader>/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Fuzzy find in the current buffer" },
       {
-        "<leader>ss",
+        "<leader>fg",
+        Util.telescope("live_grep", { search_dirs = { vim.fn.expand("%:p") } }),
+        desc = "Grep (current buffer)",
+      },
+      { "<leader>fb", Util.telescope("live_grep", { grep_open_files = true }), desc = "Grep (open buffers)" },
+      -- TODO figure out what the diff is between the root dir and cwd. Maybe change fc/sc to current buffer dir search?
+      { "<leader>ff", Util.telescope("live_grep"), desc = "Grep (root dir)" },
+      { "<leader>fc", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+      {
+        "<leader>fs",
         Util.telescope("lsp_document_symbols", {
           symbols = {
             "Class",
@@ -148,7 +126,7 @@ return {
         desc = "Goto Symbol",
       },
       {
-        "<leader>sS",
+        "<leader>fw",
         Util.telescope("lsp_dynamic_workspace_symbols", {
           symbols = {
             "Class",
@@ -165,6 +143,37 @@ return {
         }),
         desc = "Goto Symbol (Workspace)",
       },
+
+      -- [s]earch files
+      { "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      { "<leader>sf", Util.telescope("files"), desc = "Files (root dir)" },
+      { "<leader>sc", Util.telescope("files", { cwd = false }), desc = "Files (cwd)" },
+      { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files (root dir)" },
+      { "<leader>sR", Util.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent files (cwd)" },
+
+      -- [d]iagnostics
+      { "<leader>dc", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Current buffer diagnostics" },
+      { "<leader>dw", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
+
+      -- [g]it
+      -- TODO add more git stuff
+      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
+      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
+
+      -- [o]ther stuff
+      { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader>or", "<cmd>Telescope resume<cr>", desc = "Resume" },
+      { "<leader>oa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
+      { "<leader>oc", "<cmd>Telescope commands<cr>", desc = "Commands" },
+      { "<leader>oh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
+      { "<leader>oH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
+      { "<leader>ok", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+      { "<leader>oM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+      { "<leader>om", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+      { "<leader>oo", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+      { "<leader>ow", Util.telescope("grep_string"), desc = "Word (root dir)" },
+      { "<leader>oW", Util.telescope("grep_string", { cwd = false }), desc = "Word (cwd)" },
+      { "<leader>oC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
     },
     opts = {
       defaults = {
@@ -172,16 +181,16 @@ return {
         selection_caret = " ",
         mappings = {
           i = {
-            ["<c-t>"] = function(...)
+            ["<C-w>"] = function(...)
               return require("trouble.providers.telescope").open_with_trouble(...)
             end,
-            ["<a-t>"] = function(...)
+            ["<C-W>"] = function(...)
               return require("trouble.providers.telescope").open_selected_with_trouble(...)
             end,
-            ["<a-i>"] = function()
+            ["<C-i>"] = function()
               Util.telescope("find_files", { no_ignore = true })()
             end,
-            ["<a-h>"] = function()
+            ["<C-h>"] = function()
               Util.telescope("find_files", { hidden = true })()
             end,
             ["<C-Down>"] = function(...)
@@ -195,6 +204,9 @@ return {
             end,
             ["<C-b>"] = function(...)
               return require("telescope.actions").preview_scrolling_up(...)
+            end,
+            ["<C-Q>"] = function(...) -- Replace default mapping of <M-q>.
+              return require("telescope.actions").send_selected_to_qflist(...)
             end,
           },
           n = {
@@ -219,7 +231,12 @@ return {
       require("telescope").load_extension("file_browser")
     end,
     keys = {
-      { "<leader>se", "<Cmd>Telescope file_browser<CR>", desc = "File browser" },
+      { "<leader>ee", "<Cmd>Telescope file_browser<CR>", desc = "File browser" },
+      {
+        "<leader>ec",
+        "<Cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>",
+        desc = "File browser (from buffer path)",
+      },
     },
   },
 
@@ -269,11 +286,12 @@ return {
         ["<leader><tab>"] = { name = "+tabs" },
         ["<leader>b"] = { name = "+buffer" },
         ["<leader>c"] = { name = "+code" },
-        ["<leader>f"] = { name = "+file/find" },
+        ["<leader>d"] = { name = "+diagnostics" },
+        ["<leader>f"] = { name = "+find word" },
         ["<leader>g"] = { name = "+git" },
         ["<leader>gh"] = { name = "+hunks" },
         ["<leader>q"] = { name = "+quit/session" },
-        ["<leader>s"] = { name = "+search" },
+        ["<leader>s"] = { name = "+search files" },
         ["<leader>u"] = { name = "+ui" },
         ["<leader>w"] = { name = "+windows" },
         ["<leader>x"] = { name = "+diagnostics/quickfix" },
@@ -324,6 +342,7 @@ return {
     },
   },
 
+  -- TODO add more functionalities
   -- Git goodness
   {
     "tpope/vim-fugitive",
@@ -438,8 +457,9 @@ return {
     keys = {
       { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
       { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-      { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
-      { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+      -- TODO figure these out if we use Trouble.nvim
+      -- { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+      -- { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
       { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
       { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
     },
