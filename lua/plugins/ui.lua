@@ -5,7 +5,8 @@ return {
     "rcarriga/nvim-notify",
     keys = {
       {
-        "<leader>un",
+        -- TODO try getting the notification to fade as it's dismissed
+        "<esc>",
         function()
           require("notify").dismiss({ silent = true, pending = true })
         end,
@@ -14,6 +15,8 @@ return {
     },
     opts = {
       timeout = 3000,
+      stages = "fade",
+      render = "compact",
       max_height = function()
         return math.floor(vim.o.lines * 0.75)
       end,
@@ -132,7 +135,7 @@ return {
                 hint = icons.diagnostics.Hint,
               },
             },
-            { "filename", path = 4, symbols = { readonly = "", unnamed = "" } },
+            { "filename", path = 3, symbols = { readonly = "", unnamed = "" } },
             -- TODO see if you need this
             -- stylua: ignore
             -- {

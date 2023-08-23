@@ -14,8 +14,8 @@ return {
           return require("util").has("nvim-cmp")
         end,
       },
-      -- Useful status updates for LSP
-      { "j-hui/fidget.nvim", opts = {} },
+      -- Useful status updates for LSP. Legacy tag as it's being re-written.
+      { "j-hui/fidget.nvim", tag = "legacy", opts = {} },
     },
     ---@class PluginLspOpts
     opts = {
@@ -60,6 +60,7 @@ return {
             },
           },
         },
+        pyright = {},
       },
       -- you can do any additional lsp server setup here
       -- return true if you don't want this server to be setup with lspconfig
@@ -195,7 +196,6 @@ return {
       ensure_installed = {
         "stylua",
         "shfmt",
-        "flake8",
       },
     },
     ---@param opts MasonSettings | {ensure_installed: string[]}

@@ -1,35 +1,5 @@
 return {
 
-  -- snippets
-  -- TODO see if you still need snippets
-  {
-    "L3MON4D3/LuaSnip",
-    build = "make install_jsregexp",
-    dependencies = {
-      "rafamadriz/friendly-snippets",
-      -- Commented because of error
-      -- config = function()
-      --   require("luasnip.loaders.from_vscode").lazy_load()
-      -- end,
-    },
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    },
-    -- stylua: ignore
-    keys = {
-      {
-        "<tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-        end,
-        expr = true, silent = true, mode = "i",
-      },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-    },
-  },
-
   -- auto completion
   -- TODO need to trigger auto complete only when asked
   {
@@ -157,6 +127,7 @@ return {
   },
 
   -- better text-objects
+  -- TODO: Figure out what these are and use them.
   {
     "echasnovski/mini.ai",
     -- keys = {
