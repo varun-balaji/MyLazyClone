@@ -82,12 +82,12 @@ return {
         move = {
           enable = true,
           set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            ["]f"] = "@function.outer",
+          goto_next_start = { -- These keybinds are the same that are default in vim
+            ["]m"] = "@function.outer",
             ["]]"] = "@class.outer",
           },
           goto_next_end = {
-            ["]F"] = "@function.outer",
+            ["]M"] = "@function.outer",
             ["]["] = "@class.outer",
           },
           goto_previous_start = {
@@ -99,15 +99,16 @@ return {
             ["[]"] = "@class.outer",
           },
         },
-        swap = {
-          enable = true,
-          swap_next = {
-            ["<leader>a"] = "@parameter.inner",
-          },
-          swap_previous = {
-            ["<leader>A"] = "@parameter.inner",
-          },
-        },
+        -- We don't need this
+        -- swap = {
+        --   enable = true,
+        --   swap_next = {
+        --     ["<leader>a"] = "@parameter.inner",
+        --   },
+        --   swap_previous = {
+        --     ["<leader>A"] = "@parameter.inner",
+        --   },
+        -- },
       },
     },
     ---@param opts TSConfig
