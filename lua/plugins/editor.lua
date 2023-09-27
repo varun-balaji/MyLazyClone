@@ -342,10 +342,14 @@ return {
     },
   },
 
-  -- TODO add more functionalities
+  -- TODO add more functionalities and keybinds
   -- Git goodness
   {
     "tpope/vim-fugitive",
+    event = { "BufReadPre", "BufNewFile" },
+  },
+  {
+    "tpope/vim-rhubarb",
     event = { "BufReadPre", "BufNewFile" },
   },
 
