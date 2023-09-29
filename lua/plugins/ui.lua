@@ -182,6 +182,7 @@ return {
   -- indent guides for Neovim
   {
     "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",  -- https://github.com/lukas-reineke/indent-blankline.nvim/wiki/Migrate-to-version-3
     event = { "BufReadPost", "BufNewFile" },
     opts = {
       -- char = "▏",
