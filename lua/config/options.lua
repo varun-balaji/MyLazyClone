@@ -25,7 +25,9 @@ opt.mouse = "a" -- Enable mouse mode
 opt.number = true -- Print line number
 opt.pumblend = 10 -- Popup blend
 opt.pumheight = 10 -- Maximum number of entries in a popup
-opt.relativenumber = true -- Relative line numbers
+-- TESTING: Testing if we really need relative numbers?
+-- opt.relativenumber = true -- Relative line numbers
+opt.relativenumber = false -- Relative line numbers
 opt.scrolloff = 4 -- Lines of context
 -- TODO what is :mksession?
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }

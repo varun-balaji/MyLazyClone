@@ -180,18 +180,28 @@ return {
   },
 
   -- indent guides for Neovim
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",  -- https://github.com/lukas-reineke/indent-blankline.nvim/wiki/Migrate-to-version-3
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
+  -- NOTE: Not using because it highlights through scope, not through indents
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   main = "ibl",  -- https://github.com/lukas-reineke/indent-blankline.nvim/wiki/Migrate-to-version-3
+  --   event = { "BufReadPost", "BufNewFile" },
+  --   opts = {
+  --     indent = {
+  --       char = "▎",
+  --     },
+  --     -- indent = { char = "│" },
+  --     -- whitespace = { highlight = { "Whitespace", "NonText" } },
+  --     -- scope = { exclude = { language = { "lua" } } },
+  --     exclude = { filetypes = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" } },
+  --   },
+  -- },
+  -- Old options
       -- char = "▏",
-      char = "│",
-      filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-      show_trailing_blankline_indent = false,
-      show_current_context = true,
-    },
-  },
+      -- removed because of changes
+      -- char = "│",
+      -- filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
+      -- show_trailing_blankline_indent = false,
+      -- show_current_context = true,
 
   -- TODO see if we need this
   -- -- active indent guide and indent text objects
